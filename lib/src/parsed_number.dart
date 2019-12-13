@@ -13,7 +13,7 @@ class ParsedNumber {
     this.formatted,
   });
 
-  factory ParsedNumber.fromMap(map) {
+  static ParsedNumber fromMap(map) {
     return ParsedNumber._(
       type: map['type'],
       countryCode: map['country_code'],
