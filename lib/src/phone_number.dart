@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:phone_number/src/parsed_number.dart';
 
 const _phoneNumberChannel = MethodChannel('com.julienvignali/phone_number');
 
@@ -15,9 +16,10 @@ class PhoneNumber {
   @visibleForTesting
   factory PhoneNumber.withChannel(channel) => PhoneNumber._(channel);
 
-  Future<dynamic> parse(String string, {String region}) {
+  Future<ParsedNumber> parse(String string, {String region}) async {
     final args = {"string": string, "region": region};
-    return _channel.invokeMethod("parse", args);
+    final res = await _channel.invokeMapMethod<String, dynamic>("parse", args);
+    return ParsedNumber.fromMap(res);
   }
 
   Future<dynamic> parseList(List<String> strings, {String region}) {

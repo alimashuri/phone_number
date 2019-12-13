@@ -21,21 +21,19 @@ class _MyAppState extends State<MyApp> {
     initPlatformState();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       final parsed = await _plugin.parse("49988151701", region: "BR");
 
       platformVersion = """   
       
-type: ${parsed['type']}
-e164: ${parsed['e164']} 
-international: ${parsed['international']}
-national: ${parsed['national']}
-country code: ${parsed['country_code']}
-national number: ${parsed['national_number']}
+type: ${parsed.type}
+e164: ${parsed.formatted.e164} 
+international: ${parsed.formatted.international}
+national: ${parsed.formatted.national}
+country code: ${parsed.countryCode}
+national number: ${parsed.nationalNumber}
       """;
 
       final formatted = await _plugin.format('+47234723432', 'BR');
@@ -69,9 +67,6 @@ number not recognized: $number
       platformVersion = 'Failed: ${e.message}';
     }
 
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
     if (!mounted) return;
 
     setState(() {
@@ -96,12 +91,13 @@ number not recognized: $number
           ],
         ),
         body: Center(
-            child: SingleChildScrollView(
-          child: Text(
-            _platformVersion,
-            textAlign: TextAlign.left,
+          child: SingleChildScrollView(
+            child: Text(
+              _platformVersion,
+              textAlign: TextAlign.left,
+            ),
           ),
-        )),
+        ),
       ),
     );
   }
