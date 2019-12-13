@@ -1,5 +1,7 @@
 package com.julienvignali.phone_number;
 
+import androidx.annotation.NonNull;
+
 import com.google.i18n.phonenumbers.AsYouTypeFormatter;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
@@ -25,17 +27,23 @@ public class PhoneNumberPlugin implements MethodCallHandler {
     }
 
     @Override
-    public void onMethodCall(MethodCall call, Result result) {
-        if (call.method.equals("parse")) {
-            parse(call, result);
-        } else if (call.method.equals("parse_list")) {
-            parseList(call, result);
-        } else if (call.method.equals("format")) {
-            format(call, result);
-        } else if(call.method.equals("get_all_supported_regions")) {
-            getAllSupportedRegions(result);
-        } else {
-            result.notImplemented();
+    public void onMethodCall(@NonNull  MethodCall call, @NonNull Result result) {
+        switch (call.method) {
+            case "parse":
+                parse(call, result);
+                break;
+            case "parse_list":
+                parseList(call, result);
+                break;
+            case "format":
+                format(call, result);
+                break;
+            case "get_all_supported_regions":
+                getAllSupportedRegions(result);
+                break;
+            default:
+                result.notImplemented();
+                break;
         }
     }
 
