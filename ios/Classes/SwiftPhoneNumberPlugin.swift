@@ -22,13 +22,15 @@ public class SwiftPhoneNumberPlugin: NSObject, FlutterPlugin {
     private let kit = PhoneNumberKit()
     
     private func getAllSupportedRegions(result: FlutterResult) {
-        var map: [String: Int] = [:]
-        kit.allCountries().forEach { (regionCode) in
-            if let countryCode = kit.countryCode(for: regionCode) {
-                map[regionCode] = Int(countryCode)
+        var regions: [[String: Any]] = []
+
+        kit.allCountries().forEach { (country) in
+            if let code = kit.countryCode(for: country) {
+                regions.append(["code": Int(code), "country_code": country])
             }
         }
-        result(map)
+
+        result(regions)
     }
 
     private func format(_ call: FlutterMethodCall, result: FlutterResult) {

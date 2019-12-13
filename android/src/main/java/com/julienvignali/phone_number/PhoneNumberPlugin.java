@@ -6,15 +6,16 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.PhoneNumberUtil.PhoneNumberType;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
-import java.util.Map;
 
 public class PhoneNumberPlugin implements MethodCallHandler {
 
@@ -39,13 +40,18 @@ public class PhoneNumberPlugin implements MethodCallHandler {
     }
 
     private void getAllSupportedRegions(Result result) {
-        final Map<String, Integer> map = new HashMap<>();
+        final PhoneNumberUtil util = PhoneNumberUtil.getInstance();
 
-        for (String region : PhoneNumberUtil.getInstance().getSupportedRegions()) {
-            map.put(region, PhoneNumberUtil.getInstance().getCountryCodeForRegion(region));
+        final ArrayList<Map<String, Object>> regions = new ArrayList<>();
+
+        for (String region : util.getSupportedRegions()) {
+            final Map<String, Object> map = new HashMap<>();
+            map.put("code", util.getCountryCodeForRegion(region));
+            map.put("country_code", region);
+            regions.add(map);
         }
 
-        result.success(map);
+        result.success(regions);
     }
 
     private void format(MethodCall call, Result result) {

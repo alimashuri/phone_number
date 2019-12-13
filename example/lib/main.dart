@@ -104,15 +104,15 @@ number not recognized: $number
 
   Future<void> _handleGetAll(BuildContext context) async {
     final all = await _plugin.allSupportedRegions();
+    all.sort((a, b) => a.countryCode.compareTo(b.countryCode));
 
-    print("all: $all");
     await showDialog(
       context: context,
       builder: (context) {
-        final List<TableRow> rows = all.keys.map((regionCode) {
+        final List<TableRow> rows = all.map((region) {
           return TableRow(children: [
-            Text(regionCode),
-            Text('${all[regionCode]}'),
+            Text(region.countryCode),
+            Text('${region.code}'),
           ]);
         }).toList();
         return AlertDialog(

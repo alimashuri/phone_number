@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:phone_number/src/parsed_number.dart';
+import 'package:phone_number/src/region.dart';
 
 const _phoneNumberChannel = MethodChannel('com.julienvignali/phone_number');
 
@@ -33,7 +34,10 @@ class PhoneNumber {
   }
 
   /// Returns a dictionary of all supported regions & their country code.
-  Future<Map<String, int>> allSupportedRegions() {
-    return _channel.invokeMapMethod<String, int>("get_all_supported_regions");
+  Future<List<Region>> allSupportedRegions() async {
+    final list = await _channel.invokeListMethod<Map>(
+      "get_all_supported_regions",
+    );
+    return list.map(Region.fromMap).toList(growable: false);
   }
 }
