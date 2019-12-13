@@ -25,6 +25,30 @@ class ParsedNumber {
       ),
     );
   }
+
+  @override
+  String toString() {
+    return 'ParsedNumber{type: $type, countryCode: $countryCode, nationalNumber: $nationalNumber, inputString: $inputString, formatted: $formatted}';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ParsedNumber &&
+          runtimeType == other.runtimeType &&
+          type == other.type &&
+          countryCode == other.countryCode &&
+          nationalNumber == other.nationalNumber &&
+          inputString == other.inputString &&
+          formatted == other.formatted;
+
+  @override
+  int get hashCode =>
+      type.hashCode ^
+      countryCode.hashCode ^
+      nationalNumber.hashCode ^
+      inputString.hashCode ^
+      formatted.hashCode;
 }
 
 class FormattedNumber {
@@ -33,4 +57,22 @@ class FormattedNumber {
   final String international;
 
   FormattedNumber._({this.e164, this.national, this.international});
+
+  @override
+  String toString() {
+    return 'FormattedNumber{e164: $e164, national: $national, international: $international}';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is FormattedNumber &&
+          runtimeType == other.runtimeType &&
+          e164 == other.e164 &&
+          national == other.national &&
+          international == other.international;
+
+  @override
+  int get hashCode =>
+      e164.hashCode ^ national.hashCode ^ international.hashCode;
 }
