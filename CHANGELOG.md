@@ -1,3 +1,18 @@
+## 0.6.2+1
+* Fix compatibility with Objective-C projects
+* Fix iOS example compatibility issue with Xcode 11.4 (https://flutter.dev/docs/development/ios-project-migration) 
+
+## 0.6.2
+* Upgrade to libphonenumber 8.12.1
+
+## 0.6.1
+* Compatibility with Flutters Android Embedding V2
+* Activate E2E testing capabilities
+
+## 0.6.0+2
+* Upgrade to libphonenumber 8.11.3
+* Upgrade to PhoneNumberKit 3.2.0
+
 ## 0.6.0+1
 * Thanks to @ened for helping fixing 2 iOS issues
 * Optimize factories for testing and normal usage
